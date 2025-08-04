@@ -1,0 +1,37 @@
+[
+  {
+    "Id": 1,
+    "name": "Home",
+    "path": "/",
+    "requiredRoles": [],
+    "isPublic": true
+  },
+  {
+    "Id": 2,
+    "name": "Membership",
+    "path": "/membership",
+    "requiredRoles": ["member", "both"],
+    "isPublic": false
+  },
+  {
+    "Id": 3,
+    "name": "Master",
+    "path": "/master",
+    "requiredRoles": ["master", "both"],
+    "isPublic": false
+  },
+  {
+    "Id": 4,
+    "name": "Money Insight",
+    "path": "/money-insight",
+    "requiredRoles": [],
+    "isPublic": true
+  },
+  {
+    "Id": 5,
+    "name": "Reviews",
+    "path": "/reviews",
+    "requiredRoles": [],
+    "isPublic": true
+  }
+]

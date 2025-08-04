@@ -1,0 +1,76 @@
+@import 'react-toastify/dist/ReactToastify.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0F172A;
+    color: #F8FAFC;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600;
+  }
+}
+
+.Toastify__toast-container {
+  top: 1rem;
+  right: 1rem;
+}
+
+.Toastify__toast {
+  background: #1E293B;
+  color: #F8FAFC;
+  border-radius: 12px;
+  border: 1px solid #334155;
+  min-height: 60px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.Toastify__progress-bar {
+  background: linear-gradient(90deg, #6366F1, #8B5CF6);
+}
+
+.Toastify__close-button {
+  color: #94A3B8;
+}
+
+.Toastify__close-button:hover {
+  color: #F8FAFC;
+}
+
+@layer utilities {
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent;
+  }
+  
+  .glass-effect {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10;
+  }
+  
+  .card-elevated {
+    @apply bg-surface rounded-xl border border-slate-700/50 shadow-lg shadow-slate-900/20;
+  }
+  
+  .nav-item {
+    @apply px-4 py-2 rounded-lg transition-all duration-200 ease-out hover:bg-white/10 hover:scale-[1.02] active:scale-[0.98];
+  }
+  
+  .nav-item-active {
+    @apply bg-gradient-to-r from-primary-500/20 to-secondary-500/20 border border-primary-500/30 text-primary-300;
+  }
+  
+  .nav-item-locked {
+    @apply opacity-60 cursor-not-allowed relative;
+  }
+}

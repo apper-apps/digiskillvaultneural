@@ -1,0 +1,37 @@
+[
+  {
+    "Id": 1,
+    "email": "demo@skillvault.com",
+    "role": "free",
+    "is_admin": false,
+    "created_at": "2024-01-15T08:00:00Z"
+  },
+  {
+    "Id": 2,
+    "email": "member@skillvault.com",
+    "role": "member",
+    "is_admin": false,
+    "created_at": "2024-01-10T08:00:00Z"
+  },
+  {
+    "Id": 3,
+    "email": "master@skillvault.com",
+    "role": "master",
+    "is_admin": false,
+    "created_at": "2024-01-05T08:00:00Z"
+  },
+  {
+    "Id": 4,
+    "email": "premium@skillvault.com",
+    "role": "both",
+    "is_admin": false,
+    "created_at": "2024-01-01T08:00:00Z"
+  },
+  {
+    "Id": 5,
+    "email": "admin@skillvault.com",
+    "role": "both",
+    "is_admin": true,
+    "created_at": "2023-12-01T08:00:00Z"
+  }
+]
