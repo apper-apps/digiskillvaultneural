@@ -1,9 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import { motion } from "framer-motion";
-
-const MoneyInsight = ({ currentUser }) => {
+const MoneyInsight = () => {
+  const { user: currentUser } = useSelector((state) => state.user);
   const insights = [
     {
       icon: "TrendingUp",

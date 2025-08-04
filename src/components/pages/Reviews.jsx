@@ -1,10 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import Badge from "@/components/atoms/Badge";
 import { motion } from "framer-motion";
-
-const Reviews = ({ currentUser }) => {
+const Reviews = () => {
+  const { user: currentUser } = useSelector((state) => state.user);
+  
   const testimonials = [
     {
       id: 1,

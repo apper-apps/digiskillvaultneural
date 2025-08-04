@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { AuthContext } from "../../App";
 import ApperIcon from "@/components/ApperIcon";
 import NavigationItem from "@/components/molecules/NavigationItem";
 import RoleBadge from "@/components/molecules/RoleBadge";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
-
-const Header = ({ currentUser }) => {
+const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { user } = useSelector((state) => state.user);
+  const { logout } = useContext(AuthContext);
   
   const navigationItems = [
     { path: "/", icon: "Home", label: "Home", requiredRoles: [] },
@@ -19,14 +22,25 @@ const Header = ({ currentUser }) => {
   ];
   
   const checkAccess = (requiredRoles) => {
-    if (currentUser.is_admin) return true;
+    if (!user) return false;
+    if (user.isAdmin) return true;
     if (requiredRoles.length === 0) return true;
-    return requiredRoles.includes(currentUser.role);
+    return requiredRoles.includes(user.role);
   };
   
-  const handleLockedClick = (label, requiredRoles) => {
+const handleLockedClick = (label, requiredRoles) => {
     const roleText = requiredRoles.join(" or ");
     toast.warning(`${label} requires ${roleText} access. Upgrade your membership to unlock this content!`);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast.success("Successfully logged out");
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error("Failed to logout");
+    }
   };
   
   const closeMobileMenu = () => {
@@ -74,10 +88,18 @@ const Header = ({ currentUser }) => {
             </nav>
             
             {/* User Info & Mobile Menu Button */}
-            <div className="flex items-center space-x-4">
-              <RoleBadge role={currentUser.role} isAdmin={currentUser.is_admin} />
+<div className="flex items-center space-x-4">
+              {user && <RoleBadge role={user.role} isAdmin={user.isAdmin} />}
               
-              {/* Mobile menu button */}
+              {/* Logout Button */}
+              <button
+                onClick={handleLogout}
+                className="hidden md:flex items-center px-3 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors duration-200"
+              >
+                <ApperIcon name="LogOut" size={16} className="mr-2" />
+                Logout
+              </button>
+{/* Mobile menu button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors duration-200"
@@ -154,11 +176,20 @@ const Header = ({ currentUser }) => {
                 </nav>
                 
                 {/* User Info in Mobile */}
-                <div className="mt-8 pt-6 border-t border-slate-700/50">
-                  <div className="flex items-center justify-between">
+<div className="mt-8 pt-6 border-t border-slate-700/50">
+                  <div className="flex items-center justify-between mb-4">
                     <span className="text-sm text-slate-400">Current Role:</span>
-                    <RoleBadge role={currentUser.role} isAdmin={currentUser.is_admin} />
+                    {user && <RoleBadge role={user.role} isAdmin={user.isAdmin} />}
                   </div>
+                  
+                  {/* Mobile Logout Button */}
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center justify-center px-4 py-3 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors duration-200"
+                  >
+                    <ApperIcon name="LogOut" size={16} className="mr-2" />
+                    Logout
+                  </button>
                 </div>
               </div>
             </motion.div>

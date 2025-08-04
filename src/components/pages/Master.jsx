@@ -1,12 +1,12 @@
 import React from "react";
-import ApperIcon from "@/components/ApperIcon";
-import Button from "@/components/atoms/Button";
-import Empty from "@/components/ui/Empty";
+import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
-
-const Master = ({ currentUser }) => {
-  const hasAccess = currentUser.is_admin || ["master", "both"].includes(currentUser.role);
-  
+import ApperIcon from "@/components/ApperIcon";
+import Empty from "@/components/ui/Empty";
+import Button from "@/components/atoms/Button";
+const Master = () => {
+const { user: currentUser } = useSelector((state) => state.user);
+  const hasAccess = currentUser?.isAdmin || ["master", "both"].includes(currentUser?.role);
   if (!hasAccess) {
     return (
       <motion.div

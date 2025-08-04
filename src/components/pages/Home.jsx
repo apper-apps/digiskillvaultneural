@@ -1,10 +1,26 @@
 import React from "react";
-import ApperIcon from "@/components/ApperIcon";
-import Button from "@/components/atoms/Button";
-import RoleBadge from "@/components/molecules/RoleBadge";
+import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import ApperIcon from "@/components/ApperIcon";
+import RoleBadge from "@/components/molecules/RoleBadge";
+import Button from "@/components/atoms/Button";
 
-const Home = ({ currentUser }) => {
+// Utility functions
+const checkAccess = (currentUser, requiredRoles) => {
+  if (!currentUser) return false;
+  if (currentUser.isAdmin) return true;
+  if (requiredRoles.length === 0) return true;
+  return requiredRoles.includes(currentUser.role);
+};
+
+const getAccessText = (requiredRoles) => {
+  if (requiredRoles.length === 0) return "Available to all users";
+  return `Requires ${requiredRoles.join(" or ")} access`;
+};
+
+const Home = () => {
+  const { user: currentUser } = useSelector((state) => state.user);
+  
   const features = [
     {
       icon: "Users",
@@ -36,17 +52,6 @@ const Home = ({ currentUser }) => {
     }
   ];
   
-  const checkAccess = (requiredRoles) => {
-    if (currentUser.is_admin) return true;
-    if (requiredRoles.length === 0) return true;
-    return requiredRoles.includes(currentUser.role);
-  };
-  
-  const getAccessText = (requiredRoles) => {
-    if (requiredRoles.length === 0) return "Available to all users";
-    return `Requires ${requiredRoles.join(" or ")} access`;
-  };
-  
   return (
     <div className="space-y-12">
       {/* Hero Section */}
@@ -71,9 +76,9 @@ const Home = ({ currentUser }) => {
             </div>
           </div>
           
-          <div className="flex items-center justify-center space-x-4">
+<div className="flex items-center justify-center space-x-4">
             <span className="text-slate-400">Your current access level:</span>
-            <RoleBadge role={currentUser.role} isAdmin={currentUser.is_admin} />
+            {currentUser && <RoleBadge role={currentUser.role} isAdmin={currentUser.isAdmin} />}
           </div>
         </div>
         
@@ -90,8 +95,8 @@ const Home = ({ currentUser }) => {
         transition={{ duration: 0.6, delay: 0.2 }}
         className="grid grid-cols-1 md:grid-cols-2 gap-6"
       >
-        {features.map((feature, index) => {
-          const hasAccess = checkAccess(feature.requiredRole);
+{features.map((feature, index) => {
+          const hasAccess = checkAccess(currentUser, feature.requiredRole);
           
           return (
             <motion.div
@@ -167,8 +172,8 @@ const Home = ({ currentUser }) => {
           ].map((tier) => (
             <div
               key={tier.role}
-              className={`p-4 rounded-lg border transition-all duration-200 ${
-                currentUser.role === tier.role
+className={`p-4 rounded-lg border transition-all duration-200 ${
+                currentUser?.role === tier.role
                   ? "border-primary-500 bg-primary-500/10"
                   : "border-slate-700 hover:border-slate-600"
               }`}
@@ -180,7 +185,7 @@ const Home = ({ currentUser }) => {
           ))}
         </div>
         
-        {currentUser.role === "free" && (
+{currentUser?.role === "free" && (
           <Button className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600">
             <ApperIcon name="ArrowRight" size={16} className="mr-2" />
             Upgrade Your Access
