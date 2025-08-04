@@ -10,14 +10,19 @@ export default {
         'display': ['Plus Jakarta Sans', 'sans-serif'],
         'body': ['Inter', 'sans-serif'],
       },
-      colors: {
+colors: {
         primary: {
           DEFAULT: '#6366F1',
           50: '#F0F0FF',
           100: '#E0E1FF',
+          200: '#D1D5FF',
+          300: '#C7D2FE',
+          400: '#9CA3F3',
           500: '#6366F1',
           600: '#5B5CF6',
           700: '#4F46E5',
+          800: '#4338CA',
+          900: '#3730A3',
         },
         secondary: {
           DEFAULT: '#8B5CF6',
